@@ -10,7 +10,7 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
+
 //on recuper le btn pour fermer la modal et on le stock dans un const
 const modalBtnClose = document.querySelectorAll(".close");
 // on recuper le btn submit et on les stock dans un const
@@ -26,7 +26,10 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // que quand on click la fonction closeMale ce declanche
 modalBtnClose.forEach((btn) => btn.addEventListener("click", closeModal));
 
-modalSubmit.forEach((btn) => btn.addEventListener("click", Name));
+
+
+modalSubmit.forEach((btn)=> btn.addEventListener("click",verif) )
+
 
 // launch modal form
 
@@ -41,63 +44,64 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
-
 // fonction qui verifie s'y les input pour inscription sont correcte
-
-function Name() {
-  // on recuper le prenon et le nom et on les stock dans un const
+function verif() {
+  const formData = document.querySelectorAll(".formData");
+  //on recupere tous les inputs
   const modalFirst = document.querySelector("#first").value.trim().length;
   const modalLast = document.querySelector("#last").value.trim().length;
-  // on recuper l'email et on les stock dans un const
   const modalEmail = document.querySelector("#email").value.trim();
-  // on recuper birthdate et on les stock dans un const
   const modalBirthdate = document.querySelector("#birthdate").value;
-  // on recuper le nombre de tournois et on les stock dans un const
   const modalTournois = document.querySelector("#quantity").value.trim();
-   // on recuper la case des condition et on les stock dans un const
   const modalCondition = document.querySelector("#checkbox1");
+  const modalSubmit = document.querySelector(".btn-submit");
 
-  if (modalFirst >= 2 && modalLast >= 2) {
-    console.log("Nom et prénom corrects");
-  } else {
-    alert("Veuillez entrer 2 caractères ou plus pour le champ du nom.");
+  // Réinitialiser data-error-visible à false avant de vérifier chaque condition
+  formData.forEach((element) => {
+    element.setAttribute("data-error-visible", "false");
+  });
+
+  if (modalFirst < 2) {
+    formData[0].setAttribute("data-error-visible", "true");
   }
-
-  if (modalEmail !== "" && isValidEmail(modalEmail)) {
-    console.log("Email correct");
-  } else {
-    alert("Veuillez entrer une adresse e-mail valide.");
+  if (modalLast < 2) {
+    formData[1].setAttribute("data-error-visible", "true");
   }
-
+  if (modalEmail === "" || !isValidEmail(modalEmail)) {
+    formData[2].setAttribute("data-error-visible", "true");
+  }
   if (modalBirthdate === "") {
-    alert("Vous devez entrer votre date de naissance");
+    formData[3].setAttribute("data-error-visible", "true");
   }
-
-  if (modalTournois < 99) {
-    console.log("Nombre valide");
-  } else {
-    alert("Le nombre de tournois doit être inférieur à 99.");
+  if (modalTournois === "" || modalTournois >= 100) {
+    formData[4].setAttribute("data-error-visible", "true");
   }
-
-  if (verifCaseLocalisation()) {
-    console.log("Au moins une case est cochée");
-  } else {
-    alert("Vous devez choisir une option de localisation.");
+  if (!verifCaseLocalisation()) {
+    formData[5].setAttribute("data-error-visible", "true");
   }
-
-  if (modalCondition.checked) {
-    console.log("La case des conditions est cochée");
+  if (!modalCondition.checked) {
+    formData[6].setAttribute("data-error-visible", "true");
+  }
+  // tous les condition sont true alors on change le btn submite em fermer
+  if (
+    !modalCondition.checked ||
+    !verifCaseLocalisation() ||
+    modalTournois === "" ||
+    modalTournois >= 100 ||
+    modalBirthdate === "" ||
+    modalEmail === "" ||
+    !isValidEmail(modalEmail) ||
+    modalLast < 2 ||
+    modalFirst < 2
+  ) {
   } else {
-    alert("Vous devez accepter les termes et conditions.");
+    modalSubmit.value = "Fermer";
+    console.log("felm");
+    formData.forEach((label) => {
+      label.style.visibility = "hidden";
+    });
   }
 }
-
-
-
-
-
-
-
 
 // on verifie si il y un @ et un point dans l'email
 function isValidEmail(email) {
@@ -105,7 +109,7 @@ function isValidEmail(email) {
 }
 // boucle for pour verifier si l'une des case localisation est cocher si oui = true si non = false
 function verifCaseLocalisation() {
-  // on recupere tous les case de localisation 
+  // on recupere tous les case de localisation
   const modalLocalisation = document.querySelectorAll(
     'input[type="radio"][name="location"]'
   );
