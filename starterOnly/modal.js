@@ -10,7 +10,7 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-
+const formData = document.querySelectorAll(".formData");
 //on recuper le btn pour fermer la modal et on le stock dans un const
 const modalBtnClose = document.querySelectorAll(".close");
 // on recuper le btn submit et on les stock dans un const
@@ -28,7 +28,12 @@ modalBtnClose.forEach((btn) => btn.addEventListener("click", closeModal));
 
 
 
-modalSubmit.forEach((btn)=> btn.addEventListener("click",verif) )
+modalSubmit.forEach((btn)=> btn.addEventListener("click",function(event){
+verif();
+event.preventDefault(); // Empêcher la soumission du formulaire
+
+}));
+
 
 
 // launch modal form
@@ -37,16 +42,15 @@ modalSubmit.forEach((btn)=> btn.addEventListener("click",verif) )
 // a display block pour la faire apparaitre
 function launchModal() {
   modalbg.style.display = "block";
-}
+};
 // on cree la fonction qui transforme la modal de display block
 // a display none pour la faire disparaitre
 function closeModal() {
   modalbg.style.display = "none";
-}
+};
 
 // fonction qui verifie s'y les input pour inscription sont correcte
 function verif() {
-  const formData = document.querySelectorAll(".formData");
   //on recupere tous les inputs
   const modalFirst = document.querySelector("#first").value.trim().length;
   const modalLast = document.querySelector("#last").value.trim().length;
@@ -55,6 +59,7 @@ function verif() {
   const modalTournois = document.querySelector("#quantity").value.trim();
   const modalCondition = document.querySelector("#checkbox1");
   const modalSubmit = document.querySelector(".btn-submit");
+  const modalMerci = document.querySelector(".container-merci");
 
   // Réinitialiser data-error-visible à false avant de vérifier chaque condition
   formData.forEach((element) => {
@@ -97,9 +102,13 @@ function verif() {
   } else {
     modalSubmit.value = "Fermer";
     console.log("felm");
-    formData.forEach((label) => {
-      label.style.visibility = "hidden";
-    });
+    if(modalSubmit.value ==="Fermer"){
+      console.log(modalSubmit.value)
+      formData.forEach((label) => {
+        label.style.visibility = "hidden";
+        modalMerci.style.display="flex";
+      });
+    }
   }
 }
 

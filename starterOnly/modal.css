@@ -189,7 +189,17 @@ main {
   padding: 15px 8%;
   margin: 15px auto;
 }
-
+/* Css pour le texte de remerciment */
+.container-merci{
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+.merci{
+  font-size: 35px;
+  text-align: center;
+  width:70%;
+}
 label {
   font-family: var(--font-default);
   font-size: 17px;
