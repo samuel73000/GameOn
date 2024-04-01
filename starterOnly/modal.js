@@ -1,137 +1,112 @@
+// Fonction pour modifier la navigation responsive
 function editNav() {
   var x = document.getElementById("myTopnav");
+  // Vérifie si la classe actuelle est "topnav"
   if (x.className === "topnav") {
+    // Si c'est le cas, ajoute la classe "responsive"
     x.className += " responsive";
   } else {
+    // Sinon, remplace la classe par "topnav"
     x.className = "topnav";
   }
 }
 
-// DOM Elements
-const modalbg = document.querySelector(".bground");
-const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
-//on recuper le btn pour fermer la modal et on le stock dans un const
-const modalBtnClose = document.querySelectorAll(".close");
-// on recuper le btn submit et on les stock dans un const
-const modalSubmit = document.querySelectorAll(".btn-submit");
+// Éléments du DOM
+const modalbg = document.querySelector(".bground"); // Sélectionne la modal
+const modalBtn = document.querySelectorAll(".modal-btn"); // Sélectionne tous les boutons pour ouvrir la modal
+const formData = document.querySelectorAll(".formData"); // Sélectionne les champs du formulaire
+const modalBtnClose = document.querySelectorAll(".close"); // Sélectionne les boutons pour fermer la modal
+const modalSubmit = document.querySelectorAll(".btn-submit"); // Sélectionne les boutons de soumission
 
-// launch modal event
-
-// on ce sert de la variable qui stock le btn pour ouvrir la modal et on lui dis
-// que quand on click la fonction launchModal ce declanche
+// Événement pour ouvrir la modal lorsqu'un bouton est cliqué
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
-// on ce sert de la variable qui stock le btn pour fermer la modal et on lui dis
-// que quand on click la fonction closeMale ce declanche
+// Événement pour fermer la modal lorsqu'un bouton de fermeture est cliqué
 modalBtnClose.forEach((btn) => btn.addEventListener("click", closeModal));
 
+// Événement pour le bouton de soumission du formulaire
 modalSubmit.forEach((btn) =>
-  btn.addEventListener("click", function (event) {
+  btn.addEventListener("click", (event) => {
     let modalSubmitValue = btn.value;
+    // Vérifie la valeur du bouton de soumission
     if (modalSubmitValue === "C'est parti") {
+      // Si la valeur est "C'est parti", vérifie le formulaire
       verif();
-      event.preventDefault(); // Empêcher la soumission du formulaire
+      event.preventDefault(); // Empêche la soumission du formulaire par défaut
     }
-    console.log(modalSubmitValue);
-
     if (modalSubmitValue === "Fermer") {
+      // Si la valeur est "Fermer", ferme la modal
       closeModal();
     }
   })
 );
 
-// launch modal form
-
-// on cree la fonction qui transforme la modal de display none
-// a display block pour la faire apparaitre
+// Fonction pour afficher la modal
 function launchModal() {
-  modalbg.style.display = "block";
+  modalbg.style.display = "block"; // Affiche la modal en changeant son style
 }
-// on crée la fonction qui transforme la modal de display block
-// a display none pour la faire disparaitre
+
+// Fonction pour cacher la modal
 function closeModal() {
-  modalbg.style.display = "none";
+  modalbg.style.display = "none"; // Cache la modal en changeant son style
 }
 
-// fonction qui vérifie s'y les input pour inscription sont correcte
+// Fonction pour vérifier les champs du formulaire
 function verif() {
-  //on recupere tous les inputs
-  const modalFirst = document.querySelector("#first").value.trim().length;
-  const modalLast = document.querySelector("#last").value.trim().length;
-  const modalEmail = document.querySelector("#email").value.trim();
-  const modalBirthdate = document.querySelector("#birthdate").value;
-  const modalTournois = document.querySelector("#quantity").value.trim();
-  const modalCondition = document.querySelector("#checkbox1");
-  const modalSubmit = document.querySelector(".btn-submit");
-  const modalMerci = document.querySelector(".container-merci");
+  const modalFirst = document.querySelector("#first").value.trim().length; // Longueur du prénom
+  const modalLast = document.querySelector("#last").value.trim().length; // Longueur du nom
+  const modalEmail = document.querySelector("#email").value.trim(); // Email
+  const modalBirthdate = document.querySelector("#birthdate").value; // Date de naissance
+  const modalTournois = document.querySelector("#quantity").value.trim(); // Nombre de tournois
+  const modalCondition = document.querySelector("#checkbox1"); // Condition d'utilisation
+  const modalSubmit = document.querySelector(".btn-submit"); // Bouton de soumission
+  const modalMerci = document.querySelector(".container-merci"); // Message de remerciement
 
-  // Réinitialiser data-error-visible à false avant de vérifier chaque condition
+  // Réinitialise les indicateurs d'erreur
   formData.forEach((element) => {
     element.setAttribute("data-error-visible", "false");
   });
 
-  if (modalFirst < 2) {
-    formData[0].setAttribute("data-error-visible", "true");
-  }
-  if (modalLast < 2) {
-    formData[1].setAttribute("data-error-visible", "true");
-  }
-  if (modalEmail === "" || !isValidEmail(modalEmail)) {
-    formData[2].setAttribute("data-error-visible", "true");
-  }
-  if (modalBirthdate === "") {
-    formData[3].setAttribute("data-error-visible", "true");
-  }
-  if (modalTournois === "" || modalTournois >= 100) {
-    formData[4].setAttribute("data-error-visible", "true");
-  }
-  if (!verifCaseLocalisation()) {
-    formData[5].setAttribute("data-error-visible", "true");
-  }
-  if (!modalCondition.checked) {
-    formData[6].setAttribute("data-error-visible", "true");
-  }
-  // tous les condition sont true alors on change le btn submit em fermer
-  if (
-    !modalCondition.checked ||
-    !verifCaseLocalisation() ||
-    modalTournois === "" ||
-    modalTournois >= 100 ||
-    modalBirthdate === "" ||
-    modalEmail === "" ||
-    !isValidEmail(modalEmail) ||
-    modalLast < 2 ||
-    modalFirst < 2
-  ) {
+  // Variable pour vérifier si toutes les conditions sont remplies
+  const isFormValid = modalFirst >= 2 && modalLast >= 2 && isValidEmail(modalEmail) && modalBirthdate !== "" && modalTournois !== "" && modalTournois < 100 && verifCaseLocalisation() && modalCondition.checked;
+
+  // Vérifie si le formulaire est valide
+  if (isFormValid) {
+    modalSubmit.value = "Fermer"; // Change la valeur du bouton de soumission en "Fermer"
+    // Masque les champs du formulaire et affiche le message de remerciement
+    formData.forEach((label) => {
+      label.style.visibility = "hidden";
+    });
+    modalMerci.style.display = "flex";
   } else {
-    modalSubmit.value = "Fermer";
-    if (modalSubmit.value === "Fermer") {
-      console.log(modalSubmit.value);
-      formData.forEach((label) => {
-        label.style.visibility = "hidden";
-        modalMerci.style.display = "flex";
-      });
-    }
+    // Affiche les messages d'erreur appropriés selon les conditions non remplies
+    if (modalFirst < 2) formData[0].setAttribute("data-error-visible", "true");
+    if (modalLast < 2) formData[1].setAttribute("data-error-visible", "true");
+    if (modalEmail === "" || !isValidEmail(modalEmail)) formData[2].setAttribute("data-error-visible", "true");
+    if (modalBirthdate === "") formData[3].setAttribute("data-error-visible", "true");
+    if (modalTournois === "" || modalTournois >= 100) formData[4].setAttribute("data-error-visible", "true");
+    if (!verifCaseLocalisation()) formData[5].setAttribute("data-error-visible", "true");
+    if (!modalCondition.checked) formData[6].setAttribute("data-error-visible", "true");
   }
 }
 
-// on verifie si il y un @ et un point dans l'email
+// Fonction pour valider le format de l'email
 function isValidEmail(email) {
   return email.includes("@") && email.includes(".");
 }
-// boucle for pour verifier si l'une des case localisation est cocher si oui = true si non = false
+
+// Fonction pour vérifier si au moins une case de localisation est cochée
 function verifCaseLocalisation() {
-  // on recupere tous les case de localisation
   const modalLocalisation = document.querySelectorAll(
     'input[type="radio"][name="location"]'
   );
 
+  // Vérifie si au moins une case de localisation est cochée
   for (let i = 0; i < modalLocalisation.length; i++) {
     if (modalLocalisation[i].checked) {
-      return true; // Au moins une case est cochée
+      return true;
     }
   }
 
-  return false; // Aucune case n'est cochée
+  return false;
 }
