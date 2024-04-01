@@ -26,15 +26,20 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // que quand on click la fonction closeMale ce declanche
 modalBtnClose.forEach((btn) => btn.addEventListener("click", closeModal));
 
+modalSubmit.forEach((btn) =>
+  btn.addEventListener("click", function (event) {
+    let modalSubmitValue = btn.value;
+    if (modalSubmitValue === "C'est parti") {
+      verif();
+      event.preventDefault(); // Empêcher la soumission du formulaire
+    }
+    console.log(modalSubmitValue);
 
-
-modalSubmit.forEach((btn)=> btn.addEventListener("click",function(event){
-verif();
-event.preventDefault(); // Empêcher la soumission du formulaire
-
-}));
-
-
+    if (modalSubmitValue === "Fermer") {
+      closeModal();
+    }
+  })
+);
 
 // launch modal form
 
@@ -42,14 +47,14 @@ event.preventDefault(); // Empêcher la soumission du formulaire
 // a display block pour la faire apparaitre
 function launchModal() {
   modalbg.style.display = "block";
-};
-// on cree la fonction qui transforme la modal de display block
+}
+// on crée la fonction qui transforme la modal de display block
 // a display none pour la faire disparaitre
 function closeModal() {
   modalbg.style.display = "none";
-};
+}
 
-// fonction qui verifie s'y les input pour inscription sont correcte
+// fonction qui vérifie s'y les input pour inscription sont correcte
 function verif() {
   //on recupere tous les inputs
   const modalFirst = document.querySelector("#first").value.trim().length;
@@ -87,7 +92,7 @@ function verif() {
   if (!modalCondition.checked) {
     formData[6].setAttribute("data-error-visible", "true");
   }
-  // tous les condition sont true alors on change le btn submite em fermer
+  // tous les condition sont true alors on change le btn submit em fermer
   if (
     !modalCondition.checked ||
     !verifCaseLocalisation() ||
@@ -101,12 +106,11 @@ function verif() {
   ) {
   } else {
     modalSubmit.value = "Fermer";
-    console.log("felm");
-    if(modalSubmit.value ==="Fermer"){
-      console.log(modalSubmit.value)
+    if (modalSubmit.value === "Fermer") {
+      console.log(modalSubmit.value);
       formData.forEach((label) => {
         label.style.visibility = "hidden";
-        modalMerci.style.display="flex";
+        modalMerci.style.display = "flex";
       });
     }
   }
