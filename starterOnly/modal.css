@@ -14,7 +14,6 @@ body {
   margin: 0;
   display: flex;
   flex-direction: column;
-  background-image: url("background.png");
   font-family: var(--font-default);
   font-size: 18px;
   max-width: 1300px;
@@ -31,24 +30,23 @@ img {
 }
 
 .topnav {
-  overflow: hidden;
   margin: 3.5%;
 }
 .header-logo {
-    float: left;
+  float: left;
 }
 .main-navbar {
-    float: right;
+  float: right;
 }
 .topnav a {
   float: left;
   display: block;
   color: #000000;
   text-align: center;
-  padding: 12px 12px;
+  padding: 8px 8px;
   margin: 5px;
   text-decoration: none;
-  font-size: 20px;
+  font-size: 19px;
   font-family: Roboto, sans-serif;
 }
 
@@ -69,19 +67,27 @@ img {
 }
 
 @media screen and (max-width: 768px) {
-  .topnav a {display: none;}
+  .topnav a {
+    display: none;
+  }
   .topnav a.icon {
     float: right;
     display: block;
+    margin-top: -50px;
+  }
+  .main-navbar {
+    width: 100%;
   }
 }
-
+/* responsive navbar */
 @media screen and (max-width: 768px) {
-  .topnav.responsive {position: relative;}
+  .topnav.responsive {
+    position: relative;
+  }
   .topnav.responsive .icon {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 0px;
+    top: 51px;
   }
   .topnav.responsive a {
     float: none;
@@ -90,16 +96,28 @@ img {
   }
 }
 
-
-
- @media screen and (max-width: 540px) {
-  .topnav a {display: none;}
+/* reponsive navbar  */
+@media screen and (max-width: 540px) {
+  .topnav a {
+    display: none;
+  }
   .topnav a.icon {
     float: right;
     display: block;
-    margin-top: -15px;
+    margin-top: -10px;
+    position: absolute;
+    right: 14px;
+    top: 25px;
   }
-} 
+  topnav.responsive {
+    position: relative;
+  }
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 11px;
+  }
+}
 
 main {
   font-size: 130%;
@@ -111,8 +129,6 @@ main {
   margin: 1px 20px 15px;
   border-radius: 2rem;
   text-align: justify;
-
-
 }
 
 .modal-btn {
@@ -181,30 +197,23 @@ main {
   position: relative;
   color: #fff;
   padding-top: 10px;
-
 }
-
 
 .modal-body {
   padding: 15px 8%;
   margin: 15px auto;
 }
 
-
-
-
-
-
 /* Css pour le texte de remerciment */
-.container-merci{
+.container-merci {
   display: none;
   justify-content: center;
   align-items: center;
 }
-.merci{
+.merci {
   font-size: 35px;
   text-align: center;
-  width:70%;
+  width: 70%;
 }
 label {
   font-family: var(--font-default);
@@ -217,7 +226,6 @@ input {
   padding: 8px;
   border: 0.8px solid #ccc;
   outline: none;
- 
 }
 .text-control {
   margin: 0;
@@ -246,12 +254,7 @@ input {
   border: 2px solid #e54858;
 }
 
-
-
-
-
 /* cette ligne etait commenter */
-
 
 .checkbox-label,
 .checkbox2-label {
@@ -260,16 +263,6 @@ input {
   font-size: 12px;
   font-weight: normal;
 }
-
-
-
-
-
-
-
-
-
-
 
 .checkbox-label .checkbox-icon,
 .checkbox2-label .checkbox-icon {
@@ -467,13 +460,15 @@ input {
   position: relative;
   z-index: 1;
 }
+/* resolution probleme avec le titre  */
 .hero-headline {
   font-size: 6rem;
   font-weight: normal;
-  white-space: nowrap;
+  width: 80vw;
+  height: auto;
 }
 .hero-text {
-  width: 146%;
+  width: 140%;
   font-weight: normal;
   margin-top: 57px;
   padding: 0;
@@ -531,8 +526,10 @@ footer {
     white-space: normal;
   }
   .hero-text {
-    width: unset;
+    width: 82%;
     font-size: 1.5rem;
+    height: auto;
+    white-space: wrap;
   }
   .hero-img img {
     border-radius: 10px;
@@ -558,4 +555,3 @@ footer {
     opacity: 1;
   }
 }
-

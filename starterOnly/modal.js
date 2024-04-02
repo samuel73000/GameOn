@@ -68,7 +68,15 @@ function verif() {
   });
 
   // Variable pour vérifier si toutes les conditions sont remplies
-  const isFormValid = modalFirst >= 2 && modalLast >= 2 && isValidEmail(modalEmail) && modalBirthdate !== "" && modalTournois !== "" && modalTournois < 100 && verifCaseLocalisation() && modalCondition.checked;
+  const isFormValid =
+    modalFirst >= 2 &&
+    modalLast >= 2 &&
+    isValidEmail(modalEmail) &&
+    modalBirthdate !== "" &&
+    modalTournois !== "" &&
+    modalTournois < 100 &&
+    verifCaseLocalisation() &&
+    modalCondition.checked;
 
   // Vérifie si le formulaire est valide
   if (isFormValid) {
@@ -82,11 +90,16 @@ function verif() {
     // Affiche les messages d'erreur appropriés selon les conditions non remplies
     if (modalFirst < 2) formData[0].setAttribute("data-error-visible", "true");
     if (modalLast < 2) formData[1].setAttribute("data-error-visible", "true");
-    if (modalEmail === "" || !isValidEmail(modalEmail)) formData[2].setAttribute("data-error-visible", "true");
-    if (modalBirthdate === "") formData[3].setAttribute("data-error-visible", "true");
-    if (modalTournois === "" || modalTournois >= 100) formData[4].setAttribute("data-error-visible", "true");
-    if (!verifCaseLocalisation()) formData[5].setAttribute("data-error-visible", "true");
-    if (!modalCondition.checked) formData[6].setAttribute("data-error-visible", "true");
+    if (modalEmail === "" || !isValidEmail(modalEmail))
+      formData[2].setAttribute("data-error-visible", "true");
+    if (modalBirthdate === "")
+      formData[3].setAttribute("data-error-visible", "true");
+    if (modalTournois === "" || modalTournois >= 100)
+      formData[4].setAttribute("data-error-visible", "true");
+    if (!verifCaseLocalisation())
+      formData[5].setAttribute("data-error-visible", "true");
+    if (!modalCondition.checked)
+      formData[6].setAttribute("data-error-visible", "true");
   }
 }
 
