@@ -73,6 +73,7 @@ function verif() {
     modalLast >= 2 &&
     isValidEmail(modalEmail) &&
     modalBirthdate !== "" &&
+    isValidBirthdate(modalBirthdate) && // condition pour vérifier la date de naissance est pas superieur a la date du jour
     modalTournois !== "" &&
     modalTournois < 100 &&
     verifCaseLocalisation() &&
@@ -92,7 +93,7 @@ function verif() {
     if (modalLast < 2) formData[1].setAttribute("data-error-visible", "true");
     if (modalEmail === "" || !isValidEmail(modalEmail))
       formData[2].setAttribute("data-error-visible", "true");
-    if (modalBirthdate === "")
+    if (modalBirthdate === "" || !isValidBirthdate(modalBirthdate))
       formData[3].setAttribute("data-error-visible", "true");
     if (modalTournois === "" || modalTournois >= 100)
       formData[4].setAttribute("data-error-visible", "true");
@@ -103,11 +104,33 @@ function verif() {
   }
 }
 
-// Fonction pour valider le format de l'email
-function isValidEmail(email) {
-  return email.includes("@") && email.includes(".");
+// Fonction pour vérifier la validité de la date de naissance
+function isValidBirthdate(birthdate) {
+  const selectedDate = new Date(birthdate);
+  const currentDate = new Date();
+  return selectedDate <= currentDate; // La date de naissance doit être inférieure ou égale à la date actuelle
 }
 
+function isValidEmail(email) {
+  // Vérifier s'il y a plusieurs "@" ou "."
+  if (
+    (email.match(/@/g) || []).length !== 1 ||
+    (email.match(/\./g) || []).length < 1
+  ) {
+    return false;
+  }
+  // Vérifier si l'adresse email commence ou se termine par un caractère non autorisé
+  if (email.startsWith(".") || email.endsWith(".")) {
+    return false;
+  }
+  // Vérifier si l'adresse email contient des caractères non autorisés
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!emailRegex.test(email)) {
+    return false;
+  }
+
+  return true;
+}
 // Fonction pour vérifier si au moins une case de localisation est cochée
 function verifCaseLocalisation() {
   const modalLocalisation = document.querySelectorAll(
