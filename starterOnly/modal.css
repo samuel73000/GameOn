@@ -254,8 +254,6 @@ input {
   border: 2px solid #e54858;
 }
 
-/* cette ligne etait commenter */
-
 .checkbox-label,
 .checkbox2-label {
   position: relative;
@@ -505,6 +503,7 @@ footer {
   padding-right: 2vw;
   margin: 0 20px;
 }
+/* reponsive titre */
 @media screen and (max-width: 800px) {
   .hero-section {
     display: block;

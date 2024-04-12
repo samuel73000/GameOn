@@ -104,12 +104,21 @@ function verif() {
   }
 }
 
-// Fonction pour vérifier la validité de la date de naissance
 function isValidBirthdate(birthdate) {
   const selectedDate = new Date(birthdate);
   const currentDate = new Date();
-  return selectedDate <= currentDate; // La date de naissance doit être inférieure ou égale à la date actuelle
+  
+  // Calculer la différence en millisecondes entre la date actuelle et la date de naissance
+  const differenceInMilliseconds = currentDate - selectedDate;
+  
+  // Calculer l'âge en années en divisant la différence de millisecondes par le nombre de millisecondes dans une année
+  const age = differenceInMilliseconds / (1000 * 60 * 60 * 24 * 365);
+  
+  // Vérifier si l'âge est d'au moins 18 ans
+  return age >= 18;
 }
+
+
 
 function isValidEmail(email) {
   // Vérifier s'il y a plusieurs "@" ou "."
