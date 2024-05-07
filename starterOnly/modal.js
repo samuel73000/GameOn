@@ -24,6 +24,17 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // Événement pour fermer la modal lorsqu'un bouton de fermeture est cliqué
 modalBtnClose.forEach((btn) => btn.addEventListener("click", closeModal));
 
+
+// Fonction pour afficher la modal
+function launchModal() {
+  modalbg.style.display = "block"; // Affiche la modal en changeant son style
+}
+
+// Fonction pour cacher la modal
+function closeModal() {
+  modalbg.style.display = "none"; // Cache la modal en changeant son style
+}
+
 // Événement pour le bouton de soumission du formulaire
 modalSubmit.forEach((btn) =>
   btn.addEventListener("click", (event) => {
@@ -41,15 +52,7 @@ modalSubmit.forEach((btn) =>
   })
 );
 
-// Fonction pour afficher la modal
-function launchModal() {
-  modalbg.style.display = "block"; // Affiche la modal en changeant son style
-}
 
-// Fonction pour cacher la modal
-function closeModal() {
-  modalbg.style.display = "none"; // Cache la modal en changeant son style
-}
 
 // Fonction pour vérifier les champs du formulaire
 function verif() {
